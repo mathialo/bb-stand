@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Studentorchesteret Biørneblæs</title>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<!-- <link rel=stylesheet type=text/css href="../static/style.css"> -->
+</head>
+<body>
+	<div class="centercontainer fillparent">
+	<div class="wid450 nopad nomarg">
+		<img src="{{ url_for('static', filename='bb.png') }}" class="nomarg wid450">
+		<!-- <img src="../static/bb.png" class="nomarg wid450"> -->
+		<form method="POST">
+			<input type="text" name="name" autocomplete="off" placeholder="Navn">
+			<input type="text" name="email_addr" autocomplete="off" placeholder="Epost">
+			<select name="lang">
+				<option value="nobm">Norsk</option>
+				<option value="eng">English</option>
+			</select>
+			<input type="submit" value="Send meg info!">
+		</form>
+	</div>
+	</div>
+</body>
+</html>

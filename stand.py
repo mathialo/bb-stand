@@ -98,12 +98,15 @@ def view():
 		# Read properties from request
 		name = request.form["name"]
 		email_addr = request.form["email_addr"]
-		lang = request.lang["lang"]
+		lang = request.form["lang"]
 
 		try:
+			print("Sending email to %s..." % email_addr, end="")
 			send_mail(name, email_addr, get_text(lang))
+			print("   OK!")
 
 		except:
+			print("   Fail!")
 			print("Could not send automatic email. Logging email either way.")
 			print("  -> Error message: '%s'" % str(e))
 
