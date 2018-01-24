@@ -5,6 +5,29 @@
 	<title>Studentorchesteret Biørneblæs</title>
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 	<!-- <link rel=stylesheet type=text/css href="../static/style.css"> -->
+	<script type="text/javascript">
+		function to_english() {
+			document.getElementsByName("lang-no")[0].className = "nonselected";
+			document.getElementsByName("lang-eng")[0].className = "selected";
+
+			document.getElementsByName("lang")[0].value = "eng";
+
+			document.getElementsByName("name")[0].placeholder = "Name";
+			document.getElementsByName("email_addr")[0].placeholder = "Email";
+			document.getElementsByName("formsubmit")[0].value = "Send me info!";
+		}
+
+		function to_norwegian() {
+			document.getElementsByName("lang-eng")[0].className = "nonselected";
+			document.getElementsByName("lang-no")[0].className = "selected";
+
+			document.getElementsByName("lang")[0].value = "no-nb";
+
+			document.getElementsByName("name")[0].placeholder = "Navn";
+			document.getElementsByName("email_addr")[0].placeholder = "Epost";
+			document.getElementsByName("formsubmit")[0].value = "Send meg info!";
+		}
+	</script>
 </head>
 <body>
 	<div class="centercontainer fillparent">
@@ -12,13 +35,17 @@
 		<img src="{{ url_for('static', filename='bb.png') }}" class="nomarg wid450">
 		<!-- <img src="../static/bb.png" class="nomarg wid450"> -->
 		<form method="POST">
-			<input type="text" name="name" autocomplete="off" placeholder="Navn">
-			<input type="text" name="email_addr" autocomplete="off" placeholder="Epost">
-			<select name="lang">
+			<select name="lang" style="visibility: hidden; margin: 0px; padding: 0px;">
 				<option value="nobm">Norsk</option>
 				<option value="eng">English</option>
 			</select>
-			<input type="submit" value="Send meg info!">
+			<input type="button" style="width: 210px; float: left;" class="selected" name="lang-no" value="Norsk" onclick="to_norwegian()">
+			<input type="button" style="width: 210px; float: right;" class="nonselected" name="lang-eng" value="English" onclick="to_english()">
+
+			<input type="text" name="name" autocomplete="off" placeholder="Navn">
+			<input type="text" name="email_addr" autocomplete="off" placeholder="Epost">
+
+			<input type="submit" name="formsubmit" value="Send meg info!">
 		</form>
 	</div>
 	</div>

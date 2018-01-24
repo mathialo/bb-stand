@@ -46,16 +46,33 @@ input[type=text] {
 input[type=text]:focus {
     border: 3px solid #555;
 }
-input[type=button], input[type=submit], input[type=reset] {
+
+input[type=submit], input[type=reset] {
     background-color: #4CAF50;
     border: none;
     color: white;
     padding: 16px 32px;
     text-decoration: none;
-    margin: 4px 2px;
     cursor: pointer;
+    margin: 15px 0px;
+}
+input[type=button] {
+    /*background-color: #4CAF50;*/
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 15px 0px;
 }
 
+.nonselected {
+    background-color: #dadada
+}
+
+.selected {
+    background-color: #4CAF50;
+}
 
 select {
 	width: 100%;

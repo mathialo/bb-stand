@@ -100,6 +100,8 @@ def view():
 		email_addr = request.form["email_addr"]
 		lang = request.form["lang"]
 
+		print("Request: ", name, email_addr, lang)
+
 		try:
 			print("Sending email to %s..." % email_addr, end="")
 			send_mail(name, email_addr, get_text(lang))
