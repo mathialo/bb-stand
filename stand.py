@@ -35,8 +35,7 @@ def read_properties():
 
 	except FileNotFoundError:
 		infile = open("email.properties", "w")
-		infile.write("user=")
-		infile.write("pass=")
+		infile.write("user=\npass=\n")
 		infile.close()
 
 		print("email.properties was created, please provide login info for UiO user")
@@ -91,3 +90,53 @@ def send_mail(to_name, to_email, text):
 		# Something went wrong, probably no proper internet connection
 		print("Could not send email!" + str(e))
 
+
+# Responds to user input
+@app.route("/", methods=["POST", "GET"])
+def view():
+	if request.method == "POST":
+		# Read properties from request
+		name = request.form["name"]
+		email_addr = request.form["email_addr"]
+		lang = request.lang["lang"]
+
+		try:
+			send_mail(name, email_addr, get_text(lang))
+
+		except:
+			print("Could not send automatic email. Logging email either way.")
+			print("  -> Error message: '%s'" % str(e))
+
+		logfile.write("%s,%s\n" % (name, email_addr))
+
+	return render_template('index.html')
+
+
+def main():
+	# Declare these as global vars, so that they are available from send_mail()
+	global user
+	global password
+	global logfile
+
+	try:
+		user, password = read_properties()
+
+	except:
+		print("Error in reading email settings, closing app")
+		return
+
+	try:
+		logfile = open("collected_%d.csv" % time.time(), "w")
+		logfile.write("name,email\n")
+
+	except:
+		print("Error in creating logfile, closing app")
+		return
+
+	app.run()
+
+	logfile.close()
+
+
+if __name__ == '__main__':
+	main()
