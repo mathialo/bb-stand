@@ -78,43 +78,55 @@ def send_mail(to_name, to_email, text):
 	msg.attach(part2)
 
 	# Send the email
-	try:
-		s = smtplib.SMTP("smtp.uio.no", 587)
-		s.ehlo()
-		s.starttls()
-		s.login(user, password)
-		s.sendmail("noreply@grava.uio.no", to_email, msg.as_string())
-		s.quit()
-
-	except Exception as e:
-		# Something went wrong, probably no proper internet connection
-		print("Could not send email!" + str(e))
+	s = smtplib.SMTP("smtp.uio.no", 587)
+	s.ehlo()
+	s.starttls()
+	s.login(user, password)
+	s.sendmail("noreply@grava.uio.no", to_email, msg.as_string())
+	s.quit()
 
 
 # Responds to user input
-@app.route("/", methods=["POST", "GET"])
-def view():
-	if request.method == "POST":
-		# Read properties from request
-		name = request.form["name"]
-		email_addr = request.form["email_addr"]
-		lang = request.form["lang"]
+@app.route("/", methods=["GET"])
+def main_screen():
+	return render_template('index.html')
 
-		print("Request: ", name, email_addr, lang)
 
-		try:
-			print("Sending email to %s..." % email_addr, end="")
-			send_mail(name, email_addr, get_text(lang))
-			print("   OK!")
+@app.route("/send", methods=["POST"])
+def send_screen():
+	# Read properties from request
+	name = request.form["name"]
+	email_addr = request.form["email_addr"]
+	lang = request.form["lang"]
 
-		except:
-			print("   Fail!")
-			print("Could not send automatic email. Logging email either way.")
-			print("  -> Error message: '%s'" % str(e))
+	print("Request: ", name, email_addr, lang)
 
+	text=""
+
+	try:
+		print("Sending email to %s..." % email_addr, end="")
+		send_mail(name, email_addr, get_text(lang))
+		print("   OK!")
+
+		if lang == "nobm":
+			text = "Vi har sendt deg en infomail!"
+
+		elif lang == "eng":
+			text = "We have sent you an info email!"
+
+	except Exception as e:
+		print("   Fail!")
+		print("Could not send automatic email. Logging email either way.")
+		print("  -> Error message: '%s'" % str(e))
 		logfile.write("%s,%s\n" % (name, email_addr))
 
-	return render_template('index.html')
+		if lang == "nobm":
+			text = "Vi kunne ikke sende eposten, kan du ha skrevet feil?"
+
+		elif lang == "eng":
+			text = "We could not send the email, could you have typed something wrong?"
+
+	return render_template('sent.html', infotext=text)
 
 
 def main():
