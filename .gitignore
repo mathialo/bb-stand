@@ -2,3 +2,5 @@ email.properties
 *pyc
 __pycache__/*
 *~
+*.sublime-project
+*.sublime-workspace
