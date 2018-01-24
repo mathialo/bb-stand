@@ -68,11 +68,15 @@ input[type=button] {
 }
 
 .nonselected {
-    background-color: #dadada
+    background-color: #dadada;
+    -webkit-transition: 0.35s;
+    transition: 0.35s;
 }
 
 .selected {
     background-color: #4CAF50;
+    -webkit-transition: 0.35s;
+    transition: 0.35s;
 }
 
 select {
