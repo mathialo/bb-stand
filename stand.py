@@ -66,7 +66,7 @@ def send_mail(to_name, to_email, text):
 	# Create message container
 	msg = MIMEMultipart('alternative')
 	msg['Subject'] = "BB-info!"
-	msg['From'] = "Studentorchesteret Biorneblas <noreply@grava.uio.no>"
+	msg['From'] = "Studentorchesteret Biørneblæs <noreply@grava.uio.no>"
 	msg['To'] = "%s <%s>" % (to_name, to_email)
 	msg['reply-to'] = "cc@grava.uio.no"
 
