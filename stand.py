@@ -66,7 +66,7 @@ def send_mail(to_name, to_email, text):
 	# Create message container
 	msg = MIMEMultipart('alternative')
 	msg['Subject'] = "BB-info!"
-	msg['From'] = "Studentorchesteret Biørneblæs <noreply@grava.uio.no>"
+	msg['From'] = "\"Studentorchesteret Biorneblaes\" <noreply@grava.uio.no>"
 	msg['To'] = "%s <%s>" % (to_name, to_email)
 	msg['reply-to'] = "cc@grava.uio.no"
 
@@ -106,6 +106,7 @@ def send_screen():
 	try:
 		print("Sending email to %s..." % email_addr, end="")
 		send_mail(name, email_addr, get_text(lang))
+		logfile.write("%s,%s,%s\n" % (name, email_addr, "true"))
 		print("   OK!")
 
 		if lang == "nobm":
@@ -117,14 +118,17 @@ def send_screen():
 	except Exception as e:
 		print("   Fail!")
 		print("Could not send automatic email. Logging email either way.")
+		logfile.write("%s,%s,%s\n" % (name, email_addr, "false"))
 		print("  -> Error message: '%s'" % str(e))
-		logfile.write("%s,%s\n" % (name, email_addr))
 
 		if lang == "nobm":
 			text = "Vi kunne ikke sende eposten, kan du ha skrevet feil?"
 
 		elif lang == "eng":
 			text = "We could not send the email, could you have typed something wrong?"
+
+	# Make sure file is actually updated
+	logfile.flush()
 
 	return render_template('sent.html', infotext=text)
 
@@ -144,7 +148,8 @@ def main():
 
 	try:
 		logfile = open("collected_%d.csv" % time.time(), "w")
-		logfile.write("name,email\n")
+		logfile.write("navn,epost,sendt infomail\n")
+		logfile.flush()
 
 	except:
 		print("Error in creating logfile, closing app")
