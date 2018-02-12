@@ -106,7 +106,7 @@ def send_screen():
 	try:
 		print("Sending email to %s..." % email_addr, end="")
 		send_mail(name, email_addr, get_text(lang))
-		logfile.write("%s,%s,%s\n" % (name, email_addr, "true"))
+		logfile.write("%s,%s,%s,%s\n" % (name, email_addr, lang, "true"))
 		print("   OK!")
 
 		if lang == "nobm":
@@ -118,7 +118,7 @@ def send_screen():
 	except Exception as e:
 		print("   Fail!")
 		print("Could not send automatic email. Logging email either way.")
-		logfile.write("%s,%s,%s\n" % (name, email_addr, "false"))
+		logfile.write("%s,%s,%s,%s\n" % (name, email_addr, lang, "false"))
 		print("  -> Error message: '%s'" % str(e))
 
 		if lang == "nobm":
@@ -148,7 +148,7 @@ def main():
 
 	try:
 		logfile = open("collected_%d.csv" % time.time(), "w")
-		logfile.write("navn,epost,sendt infomail\n")
+		logfile.write("navn,epost,språk,sendt infomail\n")
 		logfile.flush()
 
 	except:
