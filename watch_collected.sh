@@ -1,2 +1,2 @@
 #! /bin/bash
-watch -t csvprint --header --decorator \"\ \ \ \ \ \ \ \ \" "$1"
+watch -t csvprint --header -p 6 "$1"
