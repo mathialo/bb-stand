@@ -10,6 +10,7 @@ from email.mime.text import MIMEText
 
 # Random crap
 import time
+import unidecode
 
 
 # Create Flask app
@@ -62,6 +63,9 @@ def get_text(language):
 
 
 def send_mail(to_name, to_email, text):
+    # Enforce to_name as ascii to comply with RFC 5322
+    to_name = unidecode.unidecode(to_name)
+
     # Create message container
     msg = MIMEMultipart('alternative')
     msg['Subject'] = "BB-info!"
