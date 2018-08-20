@@ -11,6 +11,7 @@ from email.mime.text import MIMEText
 # Random crap
 import time
 import unidecode
+import sys
 
 
 # Create Flask app
@@ -150,8 +151,13 @@ def main():
         return
 
     try:
-        logfile = open("collected_%d.csv" % time.time(), "w")
-        logfile.write("navn,epost,språk,sendt infomail\n")
+        if len(sys.argv) > 1:
+            logfile = open(sys.argv[1], "a")
+
+        else:
+            logfile = open("collected_%d.csv" % time.time(), "w")
+            logfile.write("navn,epost,språk,sendt infomail\n")
+
         logfile.flush()
 
     except:
