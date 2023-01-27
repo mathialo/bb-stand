@@ -60,7 +60,8 @@ def get_text(language):
     except FileNotFoundError:
         raise Exception("No email text made for language %s!" % language)
 
-    return text
+    bettertext = text.replace("Ã¥","å").replace("Ã¸", "ø").replace("Ã¦","æ") #fixes æ, ø and å
+    return bettertext
 
 
 def send_mail(to_name, to_email, text):
@@ -112,12 +113,14 @@ def send_screen():
         send_mail(name, email_addr, get_text(lang))
         logfile.write("%s,%s,%s,%s\n" % (name, email_addr, lang, "true"))
         print("   OK!")
+        print(get_text(lang))
 
         if lang == "nobm":
             text = "Vi har sendt deg en infomail!"
 
         elif lang == "eng":
             text = "We have sent you an info email!"
+            
 
     except Exception as e:
         print("   Fail!")
